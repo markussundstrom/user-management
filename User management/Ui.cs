@@ -68,10 +68,9 @@
             switch (Console.ReadKey(true).KeyChar)
             {
                 case 'l':
-                    InputRequest("Enter username");
-                    string usernameInput = Console.ReadLine();
-                    InputRequest("Enter password");
-                    string passwordInput = HiddenEntry();
+                    
+                    string usernameInput = InputRequest("Enter username");
+                    string passwordInput = HiddenInputRequest("Enter password");
                     _usermanager.TryLogin(usernameInput, passwordInput);
                     if (_usermanager.CurrentUser == null)
                     {
@@ -84,8 +83,7 @@
                     break;
                     
                 case 'q':
-                    InputRequest("Do you want to quit? (y/n)");
-                    if (GetConfirmation())
+                    if (GetConfirmation("Do you want to quit? (y/n)"))
                     {
                         _running = false;
                     }
@@ -109,15 +107,16 @@
                 case 'E':
                     if (_usermanager.CurrentUser.Access >= User.Permissions.Moderator)
                     {
-                        InputRequest("Enter id of row to edit");
-                        int id = Int32.Parse(Console.ReadLine());
-                        if (0 > id || id > _userList.Count)
+                        if (int.TryParse(InputRequest("Enter id of row to edit"), out int id))
                         {
-                            ErrorMessage = "Invalid id to edit";
-                        }
-                        else
-                        {
-                            EditUser(_userList[id]);
+                            if (0 > id || id > _userList.Count)
+                            {
+                                ErrorMessage = "Invalid id to edit";
+                            }
+                            else
+                            {
+                                EditUser(_userList[id]);
+                            }
                         }
                     }
                     break;
@@ -149,14 +148,12 @@
                 switch (Console.ReadKey(true).KeyChar)
                 {
                     case 'f':
-                        InputRequest("Enter new Full name:");
-                        user.FullName = Console.ReadLine();
+                        user.FullName = InputRequest("Enter new Full name:");
                         InfoMessage = "Full name changed for account.";
                         break;
 
                     case 'e':
-                        InputRequest("Enter new e-mail");
-                        if (user.SetEmail(Console.ReadLine()))
+                        if (user.SetEmail(InputRequest("Enter new e-mail")))
                         {
                             InfoMessage = "Email changed";
                         }
@@ -167,10 +164,8 @@
                         break;
 
                     case 'p':
-                        InputRequest("Enter new password");
-                        string pw1 = HiddenEntry();
-                        InputRequest("Enter password again");
-                        string pw2 = HiddenEntry();
+                        string pw1 = HiddenInputRequest("Enter new password");
+                        string pw2 = HiddenInputRequest("Enter password again");
                         if (pw1 != pw2)
                         {
                             ErrorMessage = "Supplied password entries do not match, password not changed";
@@ -233,8 +228,7 @@
                         break;
 
                     case 'x':
-                        InputRequest("Really delete user?");
-                        if (GetConfirmation())
+                        if (GetConfirmation("Really delete user? (y/n)"))
                         {
                             if (_usermanager.DeleteUser(user))
                             {
@@ -263,51 +257,54 @@
         {
             Console.Clear();
 
-            InputRequest("Enter username for new user");
-            string username = Console.ReadLine();
+            
+            string username = InputRequest("Enter username for new user");
 
-            InputRequest("Enter full name for new user");
-            string fullname = Console.ReadLine();
+            
+            string fullname = InputRequest("Enter full name for new user");
 
-            InputRequest("Enter e-mail for new user (optional)");
-            string email = Console.ReadLine();
+            
+            string email = InputRequest("Enter e-mail for new user (optional)");
 
             int access = (int)User.Permissions.User;
             if (_usermanager.CurrentUser != null)
             {
-                InputRequest("Select access level for new user");
                 foreach (User.Permissions p in Enum.GetValues(typeof(User.Permissions)))
                 {
                     Console.WriteLine($"{(int)p}: {p}");
                 }
-                access = int.TryParse(Console.ReadLine(), out access) ? access : (int)User.Permissions.User;
+                access = int.TryParse(InputRequest("Select access level for new user"), out access) ? access : (int)User.Permissions.User;
             }
 
             string pw1;
             string pw2;
             do
             {
-                InputRequest("Enter password for new user");
-                pw1 = HiddenEntry();
-                InputRequest("Enter password again");
-                pw2 = HiddenEntry();
+                ShowError();
+                pw1 = HiddenInputRequest("Enter password for new user");
+                pw2 = HiddenInputRequest("Enter password again");
+                if (pw1 != pw2)
+                {
+                    ErrorMessage = "Passwords do not match";
+                }
             } while (pw1 != pw2);
 
-            if (_usermanager.AddUser(username, fullname, email, access, pw1))
+            if (_usermanager.AddUser(username, fullname, email, access, pw1, out string createUserError))
             {
                 InfoMessage = "User created";
             }
             else
             {
-                ErrorMessage = "Unable to create user";
+                ErrorMessage = createUserError;
             }
         }
 
 
 
 
-        public string HiddenEntry()
+        public string HiddenInputRequest(string message)
         {
+            ShowPrompt(message);
             string hiddenEntry = "";
             ConsoleKeyInfo ch = Console.ReadKey(true);
             while (ch.Key != ConsoleKey.Enter)
@@ -321,8 +318,9 @@
         }
 
 
-        public bool GetConfirmation()
+        public bool GetConfirmation(string message)
         {
+            ShowPrompt(message);
             while (true)
             {
                 switch (Console.ReadKey(true).KeyChar)
@@ -333,6 +331,14 @@
                         return false;
                 }
             }
+        }
+
+        public void ShowPrompt(string message)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(message);
+            Console.ResetColor();
         }
 
         public void ShowError()
@@ -359,12 +365,10 @@
             }
         }
 
-        public void InputRequest(string message)
+        public string InputRequest(string message)
         {
-            Console.BackgroundColor = ConsoleColor.DarkGreen;
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(message);
-            Console.ResetColor();
+            ShowPrompt(message);
+            return Console.ReadLine();
         }
     }
 }

@@ -6,6 +6,8 @@
         public User? CurrentUser { get; private set; }
         private UserStorage _storage;
 
+        public event EventHandler UserDataChanged;
+
         public UserManager()
         {
             _storage = new UserStorage();
@@ -16,7 +18,11 @@
                 adminUser.SetPassword("Admin123!");
                 _users.Add(adminUser);
             }
-
+            foreach (User u in _users)
+            {
+                u.UserDataChanged += HandleUserDataChanged;
+            }
+            UserDataChanged += HandleUserDataChanged;
         }
 
         public void TryLogin(string username, string password)
@@ -35,12 +41,13 @@
             CurrentUser = null;
         }
 
-        public bool AddUser(string username, string fullname, string email, int access, string password)
+        public bool AddUser(string username, string fullname, string email, int access, string password, out string error)
         {
             if (access == (int)User.Permissions.Moderator || access == (int)User.Permissions.Administrator)
             {
                 if (CurrentUser == null || (int)CurrentUser.Access < access)
                 {
+                    error = "Unable to set requested permission level";
                     return false;
                 }
             }
@@ -50,6 +57,7 @@
             }
             if (_users.Any(u => u.Username == username))
             {
+                error = "User already exists";
                 return false;
             }
             User newUser = new User(username, fullname, (User.Permissions)access);
@@ -57,14 +65,19 @@
             {
                 if (!newUser.SetEmail(email))
                 {
+                    error = "Invalid e-mail address";
                     return false;
                 }
             }
             if (!newUser.SetPassword(password))
             {
+                error = "Password does not meet security requirements";
                 return false;
             }
             _users.Add(newUser);
+            newUser.UserDataChanged += HandleUserDataChanged;
+            OnUserDataChanged();
+            error = "";
             return true;
         }
 
@@ -89,6 +102,7 @@
             if (CurrentUser.Access == User.Permissions.Administrator)
             {
                 _users.Remove(user);
+                OnUserDataChanged();
                 return true;
             }
             else
@@ -100,6 +114,20 @@
         public void ShutdownUserManager()
         {
             _storage.StoreUserData(_users);
+        }
+
+        private void HandleUserDataChanged(Object sender, EventArgs e)
+        {
+            _storage.StoreUserData(_users);
+        }
+
+        protected virtual void OnUserDataChanged()
+        {
+            EventHandler e = UserDataChanged;
+            if (e != null)
+            {
+                e(this, EventArgs.Empty);
+            }
         }
     }
 }

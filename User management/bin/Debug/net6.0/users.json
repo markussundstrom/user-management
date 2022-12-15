@@ -1,26 +1,26 @@
 [
   {
     "Username": "admin",
-    "FullName": "Admin",
-    "Email": "admin@Localhost.local",
+    "FullName": "Administrator",
+    "Email": "",
     "Access": 4,
-    "Password": "\uFFFD\uFFFD\u007Fz\uFFFD\uFFFDQ\uFFFD*\uFFFDO8Z%6\u06E3\uFFFD\uFFFD.\uFFFD\uFFFD\u0000\u0124\u003C\uFFFD\uFFFD#\b\uFFFD\r\u0010\uFFFD)\uFFFDp.\uFFFD\uFFFD]\uFFFD\u0016\uFFFD\u0018\uFFFD.\u0002\uFFFD2*\uFFFDw\uFFFD\uFFFDY)s(\uFFFD\u000EG?",
-    "Salt": "33ca761406fe450f"
+    "Password": "hFzA/upAF2jaspnCL098K7Wm8b4Bcw2USqTY4oQwqFA9cNSGApDj6qCa/8JGiggT40U8r2Cel5vtAl0kaGZLPQ==",
+    "Salt": "c5ec620225de4f7f"
   },
   {
     "Username": "user",
-    "FullName": "User",
-    "Email": "user@local.local",
+    "FullName": "",
+    "Email": "",
     "Access": 2,
-    "Password": "\uFFFD\uFFFD\u0019\uFFFDH\uFFFD?\u001B\uFFFD!\u0016h\u0014\uFFFD\uFFFD\uFFFDY\uFFFD\uFFFD\uFFFD\u076E\uFFFD\u0007\u0005fR\u0117B\uFFFDt(\uFFFD]\uFFFD\uFFFD\uFFFDh\u001EG\uFFFD\uFFFD\uFFFD#\u001B\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\u0013\uFFFDi\uFFFD\u0001(\u001CwW\uFFFD\uFFFDV",
-    "Salt": "8ec3ff2e558b4bb6"
+    "Password": "d\u002BTZnZT5twdRKJlM0a7TH8LKHfURG67ZYgGYaTwBknSHA3POq/YHRHDMdCtb4zXoGmBiBsGkWUq3ThkJ/Vll0g==",
+    "Salt": "1bfb46c80a214822"
   },
   {
-    "Username": "guest",
-    "FullName": "Guest",
+    "Username": "user2",
+    "FullName": "",
     "Email": "",
-    "Access": 1,
-    "Password": "\u0274\uFFFD\uFFFDq\uFFFDZ~\u0427\uFFFD3\uFFFD\uFFFD\uFFFD\uFFFD\u0493\uFFFD\uFFFD0\uFFFD9\uFFFD\uFFFD\uFFFD)\uFFFDB\uFFFDr\uFFFD\uFFFD\uFFFD/c\u000F\uFFFD[l\uFFFD\uFFFD\u87FE \uFFFD,\u05E5K\uFFFD\uFFFD\u001DAH\u002Bz\u0016\uFFFDq\uFFFD\u000B",
-    "Salt": "4a78accce61448a6"
+    "Access": 2,
+    "Password": "T2W57hEYMSfCQKv5C1STyDl2Ss8Onp\u002BVhO3UsC4qtV1wo/qaNMT5pktyPoyWji3vWfNfVA7XAQEm91OafjXWDA==",
+    "Salt": "f4c21f8634d74b4d"
   }
 ]

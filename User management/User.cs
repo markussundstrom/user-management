@@ -14,12 +14,14 @@ namespace User_management
             Administrator = 4
         };
 
-        public string Username { get; set; }
+        public string Username { get; private set; }
         public string FullName { get; set; }
-        public string Email { get; set; }
+        public string Email { get; private set; }
         public Permissions Access { get; private set; }
         public string Password { get; private set; } = String.Empty;
         public string Salt { get; private set; } = String.Empty;
+
+        public event EventHandler UserDataChanged;
 
         [JsonConstructor]
         public User(string username, string fullname, string email, User.Permissions access, string password, string salt)
@@ -42,7 +44,7 @@ namespace User_management
             byte[] pwBytes = Encoding.UTF8.GetBytes(password);
             HashAlgorithm algo = HashAlgorithm.Create("SHA512");
             byte[] hash = algo.ComputeHash(pwBytes);
-            return (Password == Encoding.UTF8.GetString(hash));
+            return (Password == Convert.ToBase64String(hash));
         }
 
         public bool SetPassword(string newPassword)
@@ -56,8 +58,9 @@ namespace User_management
             byte[] pwBytes = Encoding.UTF8.GetBytes(newPassword);
             HashAlgorithm algo = HashAlgorithm.Create("SHA512");
             byte[] hash = algo.ComputeHash(pwBytes);
-            Password = Encoding.UTF8.GetString(hash);
+            Password = Convert.ToBase64String(hash);
             Salt = salt;
+            OnUserDataChanged();
             return true;
         }
 
@@ -66,6 +69,7 @@ namespace User_management
             if (Regex.IsMatch(newEmail, @"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase))
             {
                 Email = newEmail;
+                OnUserDataChanged();
                 return true;
             }
             else
@@ -87,6 +91,7 @@ namespace User_management
                         Access = Permissions.Administrator;
                         break;
                 }
+                OnUserDataChanged();
             }
         }
 
@@ -103,6 +108,15 @@ namespace User_management
                         Access = Permissions.User;
                         break;
                 }
+                OnUserDataChanged();
+            }
+        }
+        protected virtual void OnUserDataChanged()
+        {
+            EventHandler e = UserDataChanged;
+            if (e != null)
+            {
+                e(this, EventArgs.Empty);
             }
         }
     }
