@@ -49,7 +49,7 @@
 
             for (int i = 0; i < _userList.Count; i++)
             {
-                Console.WriteLine($"{i} || {_userList[i].Username} || {_userList[i].FullName} || {_userList[i].Email} || {_userList[i].Access}");
+                Console.WriteLine($"{i} | {_userList[i].Username} | {_userList[i].FullName} | {_userList[i].Email} | {_userList[i].Access}");
             }
             Console.WriteLine("e: edit profile | l: Log out");
             if (_usermanager.CurrentUser.Access >= User.Permissions.Moderator)
@@ -68,7 +68,6 @@
             switch (Console.ReadKey(true).KeyChar)
             {
                 case 'l':
-                    
                     string usernameInput = InputRequest("Enter username");
                     string passwordInput = HiddenInputRequest("Enter password");
                     _usermanager.TryLogin(usernameInput, passwordInput);
@@ -117,6 +116,10 @@
                             {
                                 EditUser(_userList[id]);
                             }
+                        }
+                        else
+                        {
+                            ErrorMessage = "Invalid id to edit";
                         }
                     }
                     break;
