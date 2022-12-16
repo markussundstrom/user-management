@@ -257,12 +257,9 @@
         {
             Console.Clear();
 
-            
             string username = InputRequest("Enter username for new user");
-
             
             string fullname = InputRequest("Enter full name for new user");
-
             
             string email = InputRequest("Enter e-mail for new user (optional)");
 
@@ -273,7 +270,7 @@
                 {
                     Console.WriteLine($"{(int)p}: {p}");
                 }
-                access = int.TryParse(InputRequest("Select access level for new user"), out access) ? access : (int)User.Permissions.User;
+                access = int.TryParse(InputRequest("Select access level for new user (default: User)"), out access) ? access : (int)User.Permissions.User;
             }
 
             string pw1;
@@ -309,8 +306,22 @@
             ConsoleKeyInfo ch = Console.ReadKey(true);
             while (ch.Key != ConsoleKey.Enter)
             {
-                hiddenEntry += ch.KeyChar;
-                Console.Write('*');
+                if (ch.Key != ConsoleKey.Backspace)
+                {
+                    hiddenEntry += ch.KeyChar;
+                    Console.Write('*');
+                }
+                else if (ch.Key == ConsoleKey.Backspace)
+                {
+                    if (!string.IsNullOrEmpty(hiddenEntry))
+                    {
+                        hiddenEntry = hiddenEntry.Substring(0, hiddenEntry.Length - 1);
+                        int pos = Console.CursorLeft;
+                        Console.SetCursorPosition(pos - 1, Console.CursorTop);
+                        Console.Write(" ");
+                        Console.SetCursorPosition(pos - 1, Console.CursorTop);
+                    }
+                }
                 ch = Console.ReadKey(true);
             }
             Console.Write("\n");

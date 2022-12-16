@@ -28,7 +28,10 @@
         public void TryLogin(string username, string password)
         {
             User? requestedUser = _users.Where(u => u.Username == username).SingleOrDefault();
-            CurrentUser = requestedUser.TryPassword(password) ? requestedUser : null;
+            if (requestedUser != null)
+            {
+                CurrentUser = requestedUser.TryPassword(password) ? requestedUser : null;
+            }
         }
 
         public List<User> GetUserList()

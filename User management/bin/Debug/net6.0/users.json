@@ -22,5 +22,13 @@
     "Access": 2,
     "Password": "T2W57hEYMSfCQKv5C1STyDl2Ss8Onp\u002BVhO3UsC4qtV1wo/qaNMT5pktyPoyWji3vWfNfVA7XAQEm91OafjXWDA==",
     "Salt": "f4c21f8634d74b4d"
+  },
+  {
+    "Username": "user5",
+    "FullName": "User5",
+    "Email": "mail@mail.com",
+    "Access": 1,
+    "Password": "SVhCRLXiUCXQJUNXhAOK5JzzDHtNcoDHN\u002BEzsHpEvsdso\u002BLZ3ydjriBME/xt7po1HPOgUKrwo7TafgOZTjEmDw==",
+    "Salt": "d0a822979b704d88"
   }
 ]
