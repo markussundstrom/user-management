@@ -49,6 +49,7 @@ namespace User_management
 
         public bool SetPassword(string newPassword)
         {
+            newPassword = newPassword.Replace("\0", "");
             if (!Regex.IsMatch(newPassword, @"^(?=\P{Ll}*\p{Ll})(?=\P{Lu}*\p{Lu})(?=\P{N}*\p{N})(?=[\p{L}\p{N}]*[^\p{L}\p{N}])[\s\S]{8,}$"))
             {
                 return false;

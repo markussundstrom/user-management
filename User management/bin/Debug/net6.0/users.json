@@ -2,7 +2,7 @@
   {
     "Username": "admin",
     "FullName": "Administrator",
-    "Email": "",
+    "Email": "admin@admin.local",
     "Access": 4,
     "Password": "hFzA/upAF2jaspnCL098K7Wm8b4Bcw2USqTY4oQwqFA9cNSGApDj6qCa/8JGiggT40U8r2Cel5vtAl0kaGZLPQ==",
     "Salt": "c5ec620225de4f7f"
@@ -30,5 +30,37 @@
     "Access": 1,
     "Password": "SVhCRLXiUCXQJUNXhAOK5JzzDHtNcoDHN\u002BEzsHpEvsdso\u002BLZ3ydjriBME/xt7po1HPOgUKrwo7TafgOZTjEmDw==",
     "Salt": "d0a822979b704d88"
+  },
+  {
+    "Username": "user6",
+    "FullName": "User6",
+    "Email": "",
+    "Access": 1,
+    "Password": "PlusSsun/nW49\u002Br/dq7\u002BrzvdpmWPmc/ZcB3U0\u002BXkLPWFGT8467Bg2VfeNO6d78UKorF3KzhDJhThqxZfG2\u002BT2Q==",
+    "Salt": "31213ed811a447cc"
+  },
+  {
+    "Username": "user7",
+    "FullName": "",
+    "Email": "",
+    "Access": 1,
+    "Password": "oVd8o/sitLK75jUdGfYnLM2U\u002BkPeAB4VAE3qDmZYp7ST4OJtKxs2cTcMTmQPuANc5x7PP0vdnIJvW\u002Bf\u002BwwqfIw==",
+    "Salt": "8817873f1c494eaf"
+  },
+  {
+    "Username": "user8",
+    "FullName": "",
+    "Email": "",
+    "Access": 2,
+    "Password": "2LJPicCGvzHfTued5UaUE\u002BTtF/9X9hciHxOd8T3q5MT\u002B0OCBXReypr0JPpYBo6ZI9glga79CWNOWUUolyreS9g==",
+    "Salt": "5573d2f665e84e81"
+  },
+  {
+    "Username": "user11",
+    "FullName": "",
+    "Email": "",
+    "Access": 1,
+    "Password": "U9Hpj3oRZADa6Lf0UeB3VfBHOCXom2ACdboEF0ddXHXsUdl7ymakltuC8T1XFQgr6Jkawl7ffoF5y7yYlDAfUQ==",
+    "Salt": "8624d42738484dca"
   }
 ]

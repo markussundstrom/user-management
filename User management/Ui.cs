@@ -303,6 +303,7 @@
         {
             ShowPrompt(message);
             string hiddenEntry = "";
+            //This is not optimal, function keys etc. are accepted as input.
             ConsoleKeyInfo ch = Console.ReadKey(true);
             while (ch.Key != ConsoleKey.Enter)
             {
